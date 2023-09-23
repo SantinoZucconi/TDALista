@@ -3,6 +3,7 @@ package lista
 type ListaEnlazada[T any] struct {
 	inicio *nodoLista[T]
 	fin    *nodoLista[T]
+	largo  int
 }
 
 type Iterador[T any] struct {
@@ -35,15 +36,30 @@ func (l *ListaEnlazada[T]) BorrarPrimero() T {
 }
 
 func (l *ListaEnlazada[T]) VerPrimero() T {
+	if !l.EstaVacia() {
+		return l.inicio.dato
+	} else {
+		panic("La lista esta vacia")
+	}
 }
 
 func (l *ListaEnlazada[T]) VerUltimo() T {
+	if !l.EstaVacia() {
+		return l.fin.dato
+	} else {
+		panic("La lista esta vacia")
+	}
 }
 
 func (l *ListaEnlazada[T]) Largo() int {
+	return l.largo
 }
 
 func (l *ListaEnlazada[T]) Iterar(visitar func(T) bool) {
+	actual := l.inicio
+	for actual != nil && visitar(actual.dato) == true {
+		actual = actual.siguiente
+	}
 }
 
 //Iterador
