@@ -46,10 +46,18 @@ func (l *ListaEnlazada[T]) Largo() int {
 func (l *ListaEnlazada[T]) Iterar(visitar func(T) bool) {
 }
 
-func (l *ListaEnlazada[T]) Iterador() {
+//Iterador
+
+func (l *ListaEnlazada[T]) Iterador() IteradorLista[T] {
+	return &Iterador[T]{}
 }
 
-func (i *Iterador[T]) VerPrimero() T {
+func (i *Iterador[T]) VerActual() T {
+	if i.actual != nil {
+		return i.actual.dato
+	} else {
+		panic("Fin de la iteracion")
+	}
 }
 
 func (i *Iterador[T]) HaySiguiente() bool {
