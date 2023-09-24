@@ -136,7 +136,7 @@ func (i *iterador[T]) Insertar(valor T) {
 	}
 	i.actual = &nuevo_nodo
 	i.lista.largo++
-} // funciona internamente, pero no cambia la lista. Ademas, como cambiamos el largo de la lista?
+}
 
 func (i *iterador[T]) Borrar() T {
 	if i.actual != nil {
