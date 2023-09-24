@@ -32,8 +32,8 @@ func (l *listaEnlazada[T]) InsertarPrimero(valor T) {
 	if l.EstaVacia() {
 		l.fin = &nuevo_nodo
 	}
-
 	l.inicio = &nuevo_nodo
+	l.largo++
 
 }
 
@@ -47,16 +47,19 @@ func (l *listaEnlazada[T]) InsertarUltimo(valor T) {
 		l.fin.siguiente = &nuevo_nodo
 	}
 	l.fin = &nuevo_nodo
+	l.largo++
 }
 
 func (l *listaEnlazada[T]) BorrarPrimero() T {
 	if !l.EstaVacia() {
 		valor := l.inicio.dato
 		l.inicio = l.inicio.siguiente
+		l.largo--
 		return valor
 	} else {
 		panic("La lista esta vacia")
 	}
+
 }
 
 func (l *listaEnlazada[T]) VerPrimero() T {
@@ -93,8 +96,8 @@ func (l *listaEnlazada[T]) Iterador() IteradorLista[T] {
 		siguiente: l.inicio,
 	}
 	return &iterador[T]{
-		actual:   l.inicio,
 		anterior: &nodo_anterior,
+		actual:   l.inicio,
 	}
 }
 
@@ -102,7 +105,7 @@ func (i *iterador[T]) VerActual() T {
 	if i.actual != nil {
 		return i.actual.dato
 	} else {
-		panic("El iterador termino de iterar")
+		panic("El iterador termino de iterar") // tambien deberia soltar panic si la lista esta vacia, ahi no deberia soltar un panic distinto? corte "la lista esta vacia"
 	}
 }
 
@@ -115,7 +118,7 @@ func (i *iterador[T]) Siguiente() {
 		i.anterior = i.actual
 		i.actual = i.actual.siguiente
 	} else {
-		panic("El iterador termino de iterar")
+		panic("El iterador termino de iterar") // tambien deberia soltar panic si la lista esta vacia, ahi no deberia soltar un panic distinto? corte "la lista esta vacia"
 	}
 }
 
@@ -124,18 +127,16 @@ func (i *iterador[T]) Insertar(valor T) {
 		dato:      valor,
 		siguiente: i.actual,
 	}
-	// aca se deberia insertar en la lista
 	i.anterior.siguiente = &nuevo_nodo
 	i.actual = &nuevo_nodo
-}
+} // funciona internamente, pero no cambia la lista. Ademas, como cambiamos el largo de la lista?
 
 func (i *iterador[T]) Borrar() T {
 	if i.actual != nil {
 		i.anterior.siguiente = i.actual.siguiente
 		valor_eliminado := i.actual.dato
-		// aca se deberia borrar de la lista
 		return valor_eliminado
 	} else {
 		panic("El iterador termino de iterar")
 	}
-}
+} // como cambiamos el largo de la lista?
