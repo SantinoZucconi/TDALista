@@ -1,7 +1,6 @@
 package lista_test
 
 import (
-	"tdas/lista"
 	TDALista "tdas/lista"
 	"testing"
 
@@ -61,7 +60,7 @@ func TestAlgunosIntE(t *testing.T) {
 
 func TestAlgunosStrE(t *testing.T) {
 	t.Log("Agregamos algunos strings al final y corroboramos que esten en el orden deseado")
-	lista := lista.CrearListaEnlazada[string]()
+	lista := TDALista.CrearListaEnlazada[string]()
 	lista.InsertarPrimero("pista")
 	lista.InsertarPrimero("la")
 	lista.InsertarPrimero("explotame")
@@ -168,6 +167,42 @@ func TestBorrarEnIterador(t *testing.T) {
 	require.Equal(t, 1, valor_eliminado)
 	require.Equal(t, 2, lista.VerPrimero()) // 1
 	require.Equal(t, 2, lista.Largo())      // 3
+}
+
+func TestBorrarEntreIterador(t *testing.T) {
+	t.Log("Verificar que al remover un elemento del medio, este no está.")
+	lista := TDALista.CrearListaEnlazada[string]()
+	lista.InsertarUltimo("Y")
+	lista.InsertarUltimo("no")
+	lista.InsertarUltimo("me")
+	lista.InsertarUltimo("importa")
+	lista.InsertarUltimo("lo")
+	lista.InsertarUltimo("que")
+	lista.InsertarUltimo("digan")
+	lista.InsertarUltimo("esos")
+	lista.InsertarUltimo("copados")
+	lista.InsertarUltimo("periodistas")
+
+	elemento_a_borrar := "lo"
+
+	for i := lista.Iterador(); i.HaySiguiente(); i.Siguiente() {
+		if i.VerActual() == elemento_a_borrar {
+			i.Borrar()
+		}
+	}
+
+	elemento_eliminado := true
+	for k := lista.Iterador(); k.HaySiguiente(); k.Siguiente() {
+		if k.VerActual() == elemento_a_borrar {
+			elemento_eliminado = false
+		}
+	}
+
+	require.True(t, elemento_eliminado)
+	require.Equal(t, 9, lista.Largo())
+	require.Equal(t, "Y", lista.VerPrimero())
+	require.Equal(t, "periodistas", lista.VerUltimo())
+
 }
 
 func TestBorrarFinalIterador(t *testing.T) {
