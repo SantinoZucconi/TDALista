@@ -104,7 +104,7 @@ func (i *iterador[T]) VerActual() T {
 	if i.actual != nil {
 		return i.actual.dato
 	} else {
-		panic("El iterador termino de iterar") // tambien deberia soltar panic si la lista esta vacia, ahi no deberia soltar un panic distinto? corte "la lista esta vacia"
+		panic("El iterador termino de iterar")
 	}
 }
 
@@ -117,7 +117,7 @@ func (i *iterador[T]) Siguiente() {
 		i.anterior = i.actual
 		i.actual = i.actual.siguiente
 	} else {
-		panic("El iterador termino de iterar") // tambien deberia soltar panic si la lista esta vacia, ahi no deberia soltar un panic distinto? corte "la lista esta vacia"
+		panic("El iterador termino de iterar")
 	}
 }
 
@@ -155,4 +155,4 @@ func (i *iterador[T]) Borrar() T {
 	} else {
 		panic("El iterador termino de iterar")
 	}
-} // como cambiamos el largo de la lista?
+}
